@@ -8,56 +8,48 @@
 import sys
 sys.stdin = open("input.txt")
 
-Cheolsu = []
-for i in range(5):
-    tmp = list(map(int, input().split()))
-    for num in tmp:
-        Cheolsu.append([num, 0])
+def bingo(arr):
+    counting = diagonal1 = diagonal2 = 0
+    for i in range(5):
+        row = col = 0
+        for j in range(5):
+            row += arr[i][j]
+            col += arr[j][i]
+        if row == 5:
+            counting += 1
+        if col == 5:
+            counting += 1
 
-host = []
-for i in range(5):
-    a, b, c, d, e = map(int, input().split())
-    host += a, b, c, d, e
+        diagonal1 += arr[i][i]
+        diagonal2 += arr[i][4-i]
+        if diagonal1 == 5:
+            counting += 1
+        if diagonal2 == 5:
+            counting += 1
+    return counting
 
+
+Cheolsu = [list(map(int, input().split())) for _ in range(5)]
+host = [list(map(int, input().split())) for _ in range(5)]
+counting = [[0]*5 for _ in range(5)]
 done = 0
-for count in range(1, 26):
-    for num in Cheolsu:
-        if host[count-1] == num[0]:
-            num[1] = 1
+result = 0
+for nums in host:
+    for num in nums:
+        result += 1
+        for y in range(5):
+            for x in range(5):
+                if Cheolsu[y][x] == num:
+                    counting[y][x] += 1
+            if y >= 2:
+                bingo_count = bingo(counting)
+                if bingo_count >= 3:
+                    print(result)
+                    done = 1
+                    break
+            if done == 1:
+                break
+        if done == 1:
             break
-
-    while count >= 12:
-        bingo = 0
-        for i in [0, 1, 2, 3, 4]:
-            if Cheolsu[i][1] ==1 and Cheolsu[i+5][1] ==1 and Cheolsu[i+10][1] ==1 and Cheolsu[i+15][1] ==1 and Cheolsu[i+20][1] ==1:
-                bingo += 1
-
-        for i in [0, 5, 10, 15, 20]:
-            if Cheolsu[i][1] == 1 and Cheolsu[i+1][1] == 1 and Cheolsu[i+2][1] == 1 and Cheolsu[i+3][1] == 1 and Cheolsu[i+4][1] == 1:
-                bingo += 1
-
-        if Cheolsu[0][1] == 1 and Cheolsu[6][1] == 1 and Cheolsu[12][1] == 1 and Cheolsu[18][1] == 1 and Cheolsu[24][1] == 1:
-            bingo += 1
-
-        if Cheolsu[4][1] == 1 and Cheolsu[8][1] == 1 and Cheolsu[12][1] == 1 and Cheolsu[16][1] == 1 and Cheolsu[20][1] == 1:
-            bingo += 1
-
-        if bingo == 3:
-            print(count)
-            done = 1
-            break
-
-    if done == 1:
-        break
-
-
-
-
-
-
-
-
-
-
 
 
