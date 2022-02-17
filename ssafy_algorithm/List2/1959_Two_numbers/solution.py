@@ -20,13 +20,13 @@ for tc in range(1, T+1):
     max_sum = 0
 
     if N > M:
-        times = N-M+1
+        times = N-M+1 # 더 긴쪽의 양끝을 벗어나지 않는 선에서 이동 가능
         for time in range(times):
             result = 0
             tmp = A[time:time+M]
             for i in range(M):
-                result += tmp[i]*B[i]
-            if result > max_sum:
+                result += tmp[i]*B[i] # 서로 마주보는 숫자들 곱한 뒤 합
+            if result > max_sum: # 최댓값과 비교
                 max_sum = result
 
     elif N == M:

@@ -14,7 +14,7 @@ sys.stdin = open("input.txt")
 
 T = int(input())
 for tc in range(1, T+1):
-    all_st = [0]*5001
+    all_st = [0]*5001 # 전체 버스 정류장
     N = int(input())
     ABs = [list(map(int, input().split())) for n in range(N)]
     P = int(input())
